@@ -81,4 +81,4 @@ if __name__ == "__main__":
         ],
         flagging_mode="never",
         title=_L("二维码生成器"),
-    ).launch(css="#gradio-share-link-button-0 { display: none; }")
+    ).launch(css="#gradio-share-link-button-0 { display: none; }", ssr_mode=False)
