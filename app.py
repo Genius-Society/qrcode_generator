@@ -7,11 +7,9 @@ import gradio as gr
 EN_US = os.getenv("LANG") != "zh_CN.UTF-8"
 API_QR = os.getenv("api_qr")
 if not API_QR:
-    print("请检查环境变量")
-    exit()
+    raise EnvironmentError("请检查环境变量 api_qr")
 
-
-TMP_DIR = "./__pycache__"
+TMP_DIR = os.path.join(os.path.dirname(__file__), "__pycache__")
 ZH2EN = {
     "二维码输出尺寸": "Image size",
     "输入文本": "Input text",
@@ -68,8 +66,8 @@ def infer(img_size: int, input_txt: str):
     return status, img
 
 
-if __name__ == "__main__":
-    gr.Interface(
+def main():
+    return gr.Interface(
         fn=infer,
         inputs=[
             gr.Slider(35, 1000, 217, label=_L("二维码输出尺寸")),
@@ -81,4 +79,8 @@ if __name__ == "__main__":
         ],
         flagging_mode="never",
         title=_L("二维码生成器"),
-    ).launch(css="#gradio-share-link-button-0 { display: none; }", ssr_mode=False)
+    )
+
+
+if __name__ == "__main__":
+    main().launch(css="#gradio-share-link-button-0 { display: none; }", ssr_mode=False)
